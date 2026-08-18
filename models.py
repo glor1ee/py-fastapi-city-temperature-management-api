@@ -5,7 +5,7 @@ from database import Base
 
 
 class City(Base):
-    __tablename__ = "cities"
+    __tablename__ = "City"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, index=True)
@@ -17,10 +17,10 @@ class City(Base):
 
 
 class Temperature(Base):
-    __tablename__ = "temperatures"
+    __tablename__ = "Temperature"
 
     id = Column(Integer, primary_key=True, index=True)
-    city_id = Column(Integer, ForeignKey("cities.id"))
+    city_id = Column(Integer, ForeignKey("City.id"))
     date_time = Column(DateTime, index=True)
     temperature = Column(Float)
 
