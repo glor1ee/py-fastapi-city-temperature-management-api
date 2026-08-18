@@ -1,6 +1,6 @@
 import asyncio
 from datetime import datetime, timezone
-from typing import AsyncGenerator, Generator
+from typing import AsyncGenerator, Generator, List, Optional
 
 import httpx
 from fastapi import Depends, FastAPI, HTTPException
@@ -38,7 +38,7 @@ def create_city(city: schemas.CityCreate, db: Session = Depends(get_db)):
     return crud.create_city(db, city=city)
 
 
-@app.get("/cities", response_model=list[schemas.City])
+@app.get("/cities", response_model=List[schemas.City])
 def read_cities(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_cities(db, skip=skip, limit=limit)
 
@@ -75,7 +75,7 @@ def delete_city(city_id: int, db: Session = Depends(get_db)):
     crud.delete_city(db, db_city=db_city)
 
 
-@app.post("/temperatures/update", response_model=list[schemas.Temperature])
+@app.post("/temperatures/update", response_model=List[schemas.Temperature])
 async def update_temperatures(
     db: Session = Depends(get_db),
     client: httpx.AsyncClient = Depends(get_http_client),
@@ -102,11 +102,11 @@ async def update_temperatures(
     return created
 
 
-@app.get("/temperatures", response_model=list[schemas.Temperature])
+@app.get("/temperatures", response_model=List[schemas.Temperature])
 def read_temperatures(
     skip: int = 0,
     limit: int = 100,
-    city_id: int | None = None,
+    city_id: Optional[int] = None,
     db: Session = Depends(get_db),
 ):
     return crud.get_temperatures(db, skip=skip, limit=limit, city_id=city_id)

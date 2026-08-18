@@ -1,11 +1,12 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel, ConfigDict
 
 
 class CityBase(BaseModel):
     name: str
-    additional_info: str | None = None
+    additional_info: Optional[str] = None
 
 
 class CityCreate(CityBase):
