@@ -1,3 +1,5 @@
+from typing import Optional
+
 import httpx
 
 GEOCODING_URL = "https://geocoding-api.open-meteo.com/v1/search"
@@ -6,7 +8,7 @@ FORECAST_URL = "https://api.open-meteo.com/v1/forecast"
 
 async def fetch_current_temperature(
     client: httpx.AsyncClient, city_name: str
-) -> float | None:
+) -> Optional[float]:
     geo_response = await client.get(
         GEOCODING_URL, params={"name": city_name, "count": 1}
     )
